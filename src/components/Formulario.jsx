@@ -25,6 +25,7 @@ import clienteAxios from '../config/clienteAxios';
                const {data} = await clienteAxios.post(`/api/usuarios/registrar`,{
                    nombre,email,cc,telefono
                });
+               console.log(data);
                setAlerta({
                    msg : data.message,
                    error : false
@@ -38,7 +39,7 @@ import clienteAxios from '../config/clienteAxios';
                    setAlerta({})
                },2500)
 
-               console.log(data);
+               
           }catch(error){
               setAlerta({
                   msg : "Email en Uso",
