@@ -7,9 +7,9 @@ import clienteAxios from '../config/clienteAxios';
      const [nombre,setNombre] = useState('');
      const [email,setEmail] = useState('');
      const [cc,setCc] = useState(0);
-    
      const [telefono,setTelefono] = useState('');
      const [alerta,setAlerta] = useState({});
+     const [terminos,setTerminos] = useState(false);
 
 
      const handleSubmit = async e =>{
@@ -19,8 +19,18 @@ import clienteAxios from '../config/clienteAxios';
             setAlerta({
                 msg : "Todos los campos son Obligatorios",
                 error : true
+            });
+            
+            return;
+         } 
+          console.log(terminos);
+         if(!terminos) {
+            setAlerta({
+                msg : "Acepta terminos y condiciones",
+                error : true
             })
-         }
+            return;
+        }
           try{
                const {data} = await clienteAxios.post(`/api/usuarios/registrar`,{
                    nombre,email,cc,telefono
@@ -38,7 +48,7 @@ import clienteAxios from '../config/clienteAxios';
                setTimeout(()=>{
                    setAlerta({})
                },2500)
-
+        
                
           }catch(error){
               setAlerta({
@@ -123,7 +133,9 @@ import clienteAxios from '../config/clienteAxios';
          onChange = {e =>setTelefono(e.target.value)}
          />
      </div>
-     
+      <label className='text-sm text-white mr-5 ' htmlFor="termino">Aceptas terminos y condiciones</label>
+      <input className='mb-5' id='termino' type='checkbox' value={terminos} onChange={e=>setTerminos(e.target.value)} />
+
      <input type="submit" 
       
       className='bg-sky-600 w-full p-3 text-white font-bold uppercase rounded-md cursor-pointer hover:bg-sky-700 transition-colors'
